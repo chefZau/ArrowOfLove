@@ -1,7 +1,7 @@
 public class ArrayStack<T> implements ArrayStackADT<T> {
 
     private T[] stack;
-    private int top;
+    private int top;   // last element in the stack
 
     public static String sequence;
 
@@ -13,18 +13,18 @@ public class ArrayStack<T> implements ArrayStackADT<T> {
     }
 
     public ArrayStack(int initialCapacity) {
-        this.top = 0;
+        this.top = -1;
         this.stack = (T[]) (new Object[initialCapacity]);
     }
 
     @Override
     public void push(T dataItem) {
 
-        if (this.top == this.stack.length)
+        if (this.top + 1 == this.stack.length)
             expandCapacity();
 
-        stack[this.top] = dataItem;
         this.top++;
+        this.stack[this.top] = dataItem;
 
         if (dataItem instanceof MapCell) {
             sequence += "push" + ((MapCell) dataItem).getIdentifier();
@@ -35,42 +35,70 @@ public class ArrayStack<T> implements ArrayStackADT<T> {
 
     @Override
     public T pop() throws EmptyStackException {
-        return null;
+        
+        if (top == -1)
+            throw new EmptyStackException("Empty stack!");
+        
+        T topItem = this.stack[this.top];
+        this.stack[this.top] = null;
 
+        this.top--;
+
+        if (this.top < this.stack.length / 4) {
+            shrinkCapacity();
+        }
+
+        return topItem;
     }
 
     @Override
     public T peek() throws java.util.EmptyStackException {
-        if (this.top <= 0)
+        if (this.top == -1)
             throw new EmptyStackException("Empty stack");
-        return stack[this.top - 1];
+        return stack[this.top];
     }
 
     @Override
     public boolean isEmpty() {
-        return (this.top == 0);
+        return (this.top == -1);
     }
 
     @Override
     public int size() {
-        return this.top;
+        return this.top + 1;
     }
 
     private void expandCapacity() {
 
-        int increaseNum;
+        int newSize;
 
         if (this.stack.length < 50) {
-            increaseNum = this.stack.length + 10;
+            newSize = this.stack.length + 10;
         } else {
-            increaseNum = stack.length * 2;
+            newSize = stack.length * 2;
         }
 
-        T[] larger = (T[]) (new Object[increaseNum]);
+        T[] larger = (T[]) (new Object[newSize]);
 
         for (int i = 0; i < this.stack.length; i++)
             larger[i] = this.stack[i];
         this.stack = larger;
+    }
+
+    private void shrinkCapacity() {
+        
+        int newSize = this.stack.length / 2;
+
+        if (newSize < 14) {
+            newSize = 14;
+        }
+
+        T[] shrickArray = (T[]) (new Object[newSize]);
+
+        for (int i = 0; i < this.top + 1; i++)
+            shrickArray[i] = this.stack[i];
+        
+        this.stack = shrickArray;
     }
 
 }
