@@ -1,7 +1,7 @@
 public class ArrayStack<T> implements ArrayStackADT<T> {
 
-    private T[] stack;
-    private int top; // last element in the stack
+    private T[] stack;  
+    private int top;    // position of last element in the stack
 
     public static String sequence;
 
@@ -17,6 +17,7 @@ public class ArrayStack<T> implements ArrayStackADT<T> {
         this.stack = (T[]) (new Object[initialCapacity]);
     }
 
+    
     @Override
     public void push(T dataItem) {
 
@@ -46,6 +47,12 @@ public class ArrayStack<T> implements ArrayStackADT<T> {
 
         if (this.top < this.stack.length / 4) {
             shrinkCapacity();
+        }
+
+        if (topItem instanceof MapCell) {
+            sequence += "pop" + ((MapCell) topItem).getIdentifier();
+        } else {
+            sequence += "pop" + topItem.toString();
         }
 
         return topItem;
