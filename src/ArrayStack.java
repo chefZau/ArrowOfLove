@@ -1,7 +1,7 @@
 public class ArrayStack<T> implements ArrayStackADT<T> {
 
     private T[] stack;
-    private int top;   // last element in the stack
+    private int top; // last element in the stack
 
     public static String sequence;
 
@@ -35,10 +35,10 @@ public class ArrayStack<T> implements ArrayStackADT<T> {
 
     @Override
     public T pop() throws EmptyStackException {
-        
+
         if (top == -1)
             throw new EmptyStackException("Empty stack!");
-        
+
         T topItem = this.stack[this.top];
         this.stack[this.top] = null;
 
@@ -68,6 +68,25 @@ public class ArrayStack<T> implements ArrayStackADT<T> {
         return this.top + 1;
     }
 
+    public int length() {
+        return this.stack.length;
+    }
+
+    public String toString() {
+        String results = "Stack: ";
+
+        for (int i = 0; i < this.stack.length; i++) {
+            
+            if (i < this.stack.length - 1) {
+                results += this.stack[i].toString() + ", ";
+            } else {
+                results += this.stack[i].toString();
+            }
+        }
+        
+        return results;
+    }
+
     private void expandCapacity() {
 
         int newSize;
@@ -86,7 +105,7 @@ public class ArrayStack<T> implements ArrayStackADT<T> {
     }
 
     private void shrinkCapacity() {
-        
+
         int newSize = Math.floorDiv(this.stack.length, 2);
 
         if (newSize < 14) {
@@ -97,7 +116,7 @@ public class ArrayStack<T> implements ArrayStackADT<T> {
 
         for (int i = 0; i < this.top + 1; i++)
             shrickArray[i] = this.stack[i];
-        
+
         this.stack = shrickArray;
     }
 
