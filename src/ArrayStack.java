@@ -87,7 +87,7 @@ public class ArrayStack<T> implements ArrayStackADT<T> {
 
     private void shrinkCapacity() {
         
-        int newSize = this.stack.length / 2;
+        int newSize = Math.floorDiv(this.stack.length, 2);
 
         if (newSize < 14) {
             newSize = 14;
