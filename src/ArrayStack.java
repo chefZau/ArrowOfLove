@@ -17,7 +17,6 @@ public class ArrayStack<T> implements ArrayStackADT<T> {
         this.stack = (T[]) (new Object[initialCapacity]);
     }
 
-    
     @Override
     public void push(T dataItem) {
 
@@ -82,12 +81,12 @@ public class ArrayStack<T> implements ArrayStackADT<T> {
     public String toString() {
         String results = "Stack: ";
 
-        for (int i = 0; i < this.stack.length; i++) {
+        for (int i = 0; i < this.top + 1; i++) {
             
             if (i < this.stack.length - 1) {
                 results += this.stack[i].toString() + ", ";
             } else {
-                results += this.stack[i].toString();
+                results += this.stack[i].toString();    // last element
             }
         }
         
@@ -97,7 +96,6 @@ public class ArrayStack<T> implements ArrayStackADT<T> {
     private void expandCapacity() {
 
         int newSize;
-
         if (this.stack.length < 50) {
             newSize = this.stack.length + 10;
         } else {
