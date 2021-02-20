@@ -8,6 +8,7 @@ public class StartSearch {
     private int inertia;        // how many times an arrow has travelled in the same direction
     private int direction;      // the direction of the arrow
 
+    private final int NUMNEIGHBOURS = 4; // number of neighbours can have    
     public StartSearch(String filename) {
 
         try {
@@ -27,8 +28,8 @@ public class StartSearch {
      */
     public MapCell nextCell(MapCell cell) {
         
-        int[] scores = new int[4];
-        for (int i = 0; i < 4; i++) {
+        int[] scores = new int[NUMNEIGHBOURS];
+        for (int i = 0; i < NUMNEIGHBOURS; i++) {
             
             MapCell cur = cell.getNeighbour(i);
             
@@ -70,6 +71,25 @@ public class StartSearch {
         return next;
     }
 
+    /**
+     * check if a cell is next to Cupid
+     * @param cell the cell
+     * @return true if the cell is next to cupid, false otherwise
+     */
+    private boolean isAdjacentToCupid(MapCell cell) {
+        
+        for (int i = 0; i < NUMNEIGHBOURS; i++) {
+            
+            MapCell neighour = cell.getNeighbour(i);
+            if (neighour != null && neighour.getIdentifier() == 0) {
+                return true;
+            }
+
+        }
+        
+        return false;
+    }
+
 
     /**
      * args[0]: file name
@@ -78,9 +98,10 @@ public class StartSearch {
      * @param args
      */
     public static void main(String[] args) {
-        
-        int travelLimit;
-        int pathLenCounter = 0;
+
+        int travelLimit = Integer.MAX_VALUE;    // the number of cell that arrow can travel
+        int steps = 0;      // number of steps has performed
+        int found = 0; // the number of targets found
 
         if (args.length < 1) {
             System.out.println("You must provide the name of the input file");
@@ -89,43 +110,21 @@ public class StartSearch {
             travelLimit = Integer.parseInt(args[1]);
         }
 
-        // create an object of the class StartSearch using the constuctor StartSearch(args[0]).
-        StartSearch pathFinding = new StartSearch(args[0]);
-
-        int found = 0;
-
+        StartSearch game = new StartSearch(args[0]);
         ArrayStack<MapCell> stack = new ArrayStack<MapCell>();
 
-        MapCell initial =  pathFinding.targetMap.getStart();
 
-        stack.push(initial);
-        initial.markInStack();
-        System.out.println(stack.size());
+        MapCell initial =  game.targetMap.getStart();
+        stack.push(initial);        //Inserting initial in stack 
+        initial.markInStack();      // mark initial as visited.
 
-        System.out.println("\n\n");
-        System.out.println(initial.getNeighbour(1).getCellType());
-        System.out.println(initial.getIdentifier());
-        initial.getNeighbour(1).markInStack();
-
-        stack.peek().markOutStack();
-        MapCell tmp = stack.pop();
-        
-        MapCell current = stack.peek();
-        MapCell next = pathFinding.nextCell(current);
-
-        System.out.println(next.getCellType());
-        System.out.println(next.getIdentifier());
-
-        System.out.println(!stack.isEmpty() && pathFinding.numArrows > 0);
-
-        while (!stack.isEmpty() && pathFinding.numArrows > 0) {
+        while (!stack.isEmpty() && found < game.numArrows && steps < travelLimit) {
             
-            System.out.println(stack.size());
-
-            MapCell current = stack.peek();
-            MapCell next = pathFinding.nextCell(current);
-
+            MapCell top = stack.peek();
+            
+            MapCell next = game.nextCell(top);
             if (next != null) {
+                
                 stack.push(next);
                 next.markInStack();
                 
@@ -133,37 +132,24 @@ public class StartSearch {
                     found++;
                 
             } else {
+                top.markOutStack();
                 stack.pop();
             }
 
-            if (args.length == 2)
-                pathLenCounter++;
+            steps++;
         }
 
         while (!stack.isEmpty()) {
-            MapCell tmp = stack.pop();
-            tmp.markOutStack();
+
+            MapCell top = stack.peek();
+            if (game.isAdjacentToCupid(top)) {
+                top.markOutStack();
+            }
+
+            stack.pop();
         }
 
-        // pathFinding.targetMap.repaint();
-
-        /*
-           DFS-iterative (G, s):                                   //Where G is graph and s is source vertex
-                let S be stack
-                S.push( s )            //Inserting s in stack 
-                mark s as visited.
-                while ( S is not empty):
-                    
-                    Pop a vertex from stack to visit next
-                    v  =  S.top( ) 
-                    S.pop( )
-                    
-                    Push all the neighbours of v in stack that are not visited   
-                    for all neighbours w of v in Graph G:
-                        if w is not visited :
-                                S.push( w )         
-                                mark w as visited
-         */
 
     }
+
 }
