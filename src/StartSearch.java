@@ -48,8 +48,63 @@ public class StartSearch {
 		}
     }
 
+    private int getBestDirection(MapCell cell) {
+        
+        int[] scores = new int[NUMNEIGHBOURS];
+        for (int i = 0; i < NUMNEIGHBOURS; i++) {
+
+            MapCell cur = cell.getNeighbour(i);
+            if (cur == null || cur.isMarked() || cur.isBlackHole()) {
+                scores[i] = -1;
+            } else if (cur.isTarget()) {
+                scores[i] = 100;
+            } else if (cur.isCrossPath()) {
+                scores[i] = 75;
+            } else if (cur.isVerticalPath() || cur.isHorizontalPath()) {
+                scores[i] = 50;
+            }
+
+        }
+
+        int maxElement = scores[0], maxIndex = 0;
+        for (int j = 0; j < scores.length; j++) {
+            if (scores[j] > maxElement) {
+                maxElement = scores[j];
+                maxIndex = j;
+            }
+        }
+
+    }
+
     public MapCell nextCell(MapCell cell) {
         return cell;
+        /*
+            if direction is not initilize, means we just start
+                find the best direction
+                if no direction return null
+
+                set direction
+                return cell
+            
+            direction is initialized:
+
+                is the cell at the direction not null and not marked?
+                    inertia++
+                    return cell at the direction
+
+                cell at the direction is null or marked:
+                    if inertia > 3:
+                        return null since we can't turn anymore
+                    
+                    we can turn:
+                        find the best direction
+
+                        if no direction: return null
+
+                        set direction
+                        inertia = 0
+                        return best cell
+        */
     }
 
     private boolean isAdjacentToCupid(MapCell cell) {
@@ -63,11 +118,9 @@ public class StartSearch {
     }
 
     /**
-     * return either found or not found
      * 
-     * @param maxPathLength
      * @param stack
-     * @param start
+     * @param maxSteps
      * @return
      */
     private boolean findTarget(ArrayStack<MapCell> stack, int maxSteps) {
@@ -129,7 +182,7 @@ public class StartSearch {
 
         int totalFoud = 0;
         while (Cupid.numArrows > 0) {
-            Boolean found = Cupid.findTarget(stack, maxPathLength);    // shot once
+            Boolean found = Cupid.findTarget(stack, maxPathLength);    // shoot once
             totalFoud += (found == true) ? 1 : 0;
         }
 
