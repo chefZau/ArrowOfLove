@@ -30,10 +30,10 @@ public class StartSearch {
             the distant the arrow can travel is configurable.
     */
 
-    Map targetMap;  
-    int numArrows;      // how many arrow has fired so far, how many target has found
-    int inertia;        // how many times an arrow has travelled in the same direction
-    int direction;      // tracking the direction of the arrow
+    private Map targetMap;  
+    private int numArrows;      // how many arrow has fired so far, how many target has found
+    private int inertia;        // how many times an arrow has travelled in the same direction
+    private int direction;      // tracking the direction of the arrow
     
 
     public StartSearch(String filename) {
@@ -53,10 +53,13 @@ public class StartSearch {
 
     /**
      * return either found or not found
+     * 
+     * @param maxPathLength
+     * @param stack
      * @param start
      * @return
      */
-    public boolean findTarget(Map board) {
+    public boolean findTarget(Map board, ArrayStack<MapCell> stack, int maxPathLength) {
         return false;
     }
 
@@ -72,10 +75,11 @@ public class StartSearch {
                                                             // if maxPathLength is given, we should count how many targets can be found in a path within the length
 
         StartSearch Cupid = new StartSearch(mapFileName);
+        ArrayStack<MapCell> stack = new ArrayStack<MapCell>();
 
         int totalFoud = 0;
         while (Cupid.numArrows > 0) {
-            Boolean found = Cupid.findTarget(Cupid.targetMap);
+            Boolean found = Cupid.findTarget(Cupid.targetMap, stack, maxPathLength);    // shot once
             totalFoud += (found == true) ? 1 : 0;
         }
 
