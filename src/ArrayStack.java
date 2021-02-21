@@ -10,11 +10,13 @@ public class ArrayStack<T> implements ArrayStackADT<T> {
     public ArrayStack() {
         this.top = -1;
         this.stack = (T[]) (new Object[DEFAULT_CAPACITY]);
+        this.sequence = "";
     }
 
     public ArrayStack(int initialCapacity) {
         this.top = -1;
         this.stack = (T[]) (new Object[initialCapacity]);
+        this.sequence = "";
     }
 
     @Override
