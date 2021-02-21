@@ -56,9 +56,8 @@ public class StartSearch {
      * @param start
      * @return
      */
-    public boolean findTarget(MapCell start) {
+    public boolean findTarget(Map board) {
         return false;
-        
     }
 
     public static void main(String[] args) {
@@ -74,8 +73,14 @@ public class StartSearch {
 
         StartSearch Cupid = new StartSearch(mapFileName);
 
-        
+        int totalFoud = 0;
+        while (Cupid.numArrows > 0) {
+            Boolean found = Cupid.findTarget(Cupid.targetMap);
+            totalFoud += (found == true) ? 1 : 0;
+        }
 
+        // output the number of targets found
+        System.out.println(totalFoud);
     }
 
     
