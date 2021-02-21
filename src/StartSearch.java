@@ -9,7 +9,6 @@ public class StartSearch {
     private int inertia; // how many times an arrow has travelled in the same direction
 
     private final int NUMNEIGHBOURS = 4; // number of neighbours can have
-
     public StartSearch(String filename) {
 
         try {
@@ -165,7 +164,6 @@ public class StartSearch {
 
             MapCell next = game.nextCell(top);
             if (next != null) {
-
                 stack.push(next);
                 next.markInStack();
 
@@ -177,10 +175,10 @@ public class StartSearch {
                 }
 
             } else {
+                top.markOutStack();
                 stack.pop();
                 steps++;
             }
-
         }
 
         System.out.println("------ * ------");
