@@ -40,8 +40,8 @@ public class StartSearch {
         try {
 			targetMap = new Map(filename);
             numArrows = targetMap.quiverSize();
-            this.inertia = 0;
-            this.direction = -1;
+            inertia = 0;
+            direction = -1;
 		} catch (InvalidMapException | IOException e) {
 			e.printStackTrace();
 		}
@@ -49,12 +49,33 @@ public class StartSearch {
 
     public MapCell nextCell(MapCell cell) {
         return cell;
+    }
+
+    /**
+     * return either found or not found
+     * @param start
+     * @return
+     */
+    public boolean findTarget(MapCell start) {
+        return false;
         
     }
 
-
     public static void main(String[] args) {
         
+        if (args.length < 1) {
+            System.out.println("You must provide the name of the input file");
+            System.exit(0);
+        } 
+
+        String mapFileName = args[0];
+        int maxPathLength = Integer.parseInt(args[1]);      // the number of cells that the arrow can travel
+                                                            // if maxPathLength is given, we should count how many targets can be found in a path within the length
+
+        StartSearch Cupid = new StartSearch(mapFileName);
+
+        
+
     }
 
     
