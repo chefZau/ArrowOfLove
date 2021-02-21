@@ -59,7 +59,7 @@ public class StartSearch {
      * @param start
      * @return
      */
-    public boolean findTarget(Map board, ArrayStack<MapCell> stack, int maxPathLength) {
+    public boolean findTarget(ArrayStack<MapCell> stack, int maxPathLength) {
         return false;
     }
 
@@ -79,7 +79,7 @@ public class StartSearch {
 
         int totalFoud = 0;
         while (Cupid.numArrows > 0) {
-            Boolean found = Cupid.findTarget(Cupid.targetMap, stack, maxPathLength);    // shot once
+            Boolean found = Cupid.findTarget(stack, maxPathLength);    // shot once
             totalFoud += (found == true) ? 1 : 0;
         }
 
