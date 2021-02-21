@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 /**
  * StartSearch
  */
@@ -35,7 +37,14 @@ public class StartSearch {
     
 
     public StartSearch(String filename) {
-
+        try {
+			targetMap = new Map(filename);
+            numArrows = targetMap.quiverSize();
+            this.inertia = 0;
+            this.direction = -1;
+		} catch (InvalidMapException | IOException e) {
+			e.printStackTrace();
+		}
     }
 
     public MapCell nextCell(MapCell cell) {
