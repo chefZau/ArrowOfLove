@@ -35,6 +35,7 @@ public class StartSearch {
     private int inertia;        // how many times an arrow has travelled in the same direction
     private int direction;      // tracking the direction of the arrow
     
+    private final int NUMNEIGHBOURS = 4; // number of neighbours can have
 
     public StartSearch(String filename) {
         try {
@@ -51,6 +52,16 @@ public class StartSearch {
         return cell;
     }
 
+    private boolean isAdjacentToCupid(MapCell cell) {
+        for (int i = 0; i < NUMNEIGHBOURS; i++) {
+            MapCell neighbour = cell.getNeighbour(i);
+            if (neighbour != null && neighbour.isStart()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * return either found or not found
      * 
@@ -59,7 +70,7 @@ public class StartSearch {
      * @param start
      * @return
      */
-    public boolean findTarget(ArrayStack<MapCell> stack, int maxSteps) {
+    private boolean findTarget(ArrayStack<MapCell> stack, int maxSteps) {
         
         MapCell initial = this.targetMap.getStart();
         initial.markInStack();
@@ -76,6 +87,7 @@ public class StartSearch {
 
                 if (next.isTarget()) {
                     this.numArrows--;
+                    found = true;
                 }
 
             } else {
