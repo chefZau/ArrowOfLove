@@ -59,8 +59,46 @@ public class StartSearch {
      * @param start
      * @return
      */
-    public boolean findTarget(ArrayStack<MapCell> stack, int maxPathLength) {
-        return false;
+    public boolean findTarget(ArrayStack<MapCell> stack, int maxSteps) {
+        
+        MapCell initial = this.targetMap.getStart();
+        initial.markInStack();
+
+        boolean found = false;
+        while (!stack.isEmpty() && maxSteps > 0 && !found) {
+            
+            MapCell top = stack.peek();
+            MapCell next = this.nextCell(top);
+
+            if (next != null) {
+                stack.push(next);
+                next.markInStack();
+
+                if (next.isTarget()) {
+                    this.numArrows--;
+                }
+
+            } else {
+                if (this.isAdjacentToCupid(top)) { // if top is adjacent to cupid mark out stack
+                    top.markOutStack();
+                }
+                stack.pop();
+            }
+            maxSteps--;
+        }
+
+        while (!stack.isEmpty()) {
+
+            MapCell top = stack.peek();
+
+            if (this.isAdjacentToCupid(top)) {
+                top.markOutStack();
+            }
+
+            stack.pop();
+        }
+
+        return found;
     }
 
     public static void main(String[] args) {
