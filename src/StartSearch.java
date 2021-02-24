@@ -9,7 +9,9 @@ public class StartSearch {
     private int numArrows;      // how many arrow has fired so far, how many target has found
     private int inertia;        // how many times an arrow has travelled in the same direction
     private int direction;      // tracking the direction of the arrow
-    
+
+    private boolean done;
+
     private final int NUMNEIGHBOURS = 4; // number of neighbours can have
 
     public StartSearch(String filename) {
@@ -83,6 +85,18 @@ public class StartSearch {
 
     }
 
+
+    private boolean isValidPath(MapCell current, MapCell neighbour, int direction) {
+        if (neighbour == null || neighbour.isMarked() || neighbour.isBlackHole()) {
+            return false;
+        } else if ((direction == 0 || direction == 2) && neighbour.isHorizontalPath()) {
+            return false;
+        } else if ((direction == 1 || direction == 3) && neighbour.isVerticalPath() {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Return the next best cell to continue the path from the current cell.
      * 
@@ -104,7 +118,7 @@ public class StartSearch {
         }
 
         MapCell next = cell.getNeighbour(direction);
-        if (next != null && !next.isMarked()) {
+        if (next != null && !next.isMarked() && !done && !next.isBlackHole() ) {
             inertia++;
             return next;
         } else if (inertia < 3) {
@@ -112,6 +126,8 @@ public class StartSearch {
             if (direction == -1) return null;
             inertia = 0;
             return cell.getNeighbour(direction);
+        } else {
+            this.done = true;
         }
 
         // inertia > 3, next is null or marked
@@ -153,7 +169,13 @@ public class StartSearch {
         while (!stack.isEmpty() && maxSteps > 0 && !found) {
             
             MapCell top = stack.peek();
-            MapCell next = this.nextCell(top);
+
+            MapCell next;
+            if (!done) {
+                next = this.nextCell(top);
+            } else {
+                next = null;
+            }
 
             if (next != null) {
                 stack.push(next);
@@ -171,7 +193,7 @@ public class StartSearch {
                 stack.pop();
             }
             maxSteps--;
-            System.out.println(ArrayStack.sequence);
+            // System.out.println(ArrayStack.sequence);
         }
 
         while (!stack.isEmpty()) {
@@ -183,11 +205,12 @@ public class StartSearch {
             }
 
             stack.pop();
-            System.out.println(ArrayStack.sequence);
+            // System.out.println(ArrayStack.sequence);
         }
 
         this.direction = -1;
         this.inertia = 0;
+        this.done = false;
 
         return found;
     }
@@ -231,7 +254,7 @@ public class StartSearch {
         
         // output the number of targets found
         System.out.println(totalFoud);
-        System.out.println(ArrayStack.sequence);
+        // System.out.println(ArrayStack.sequence);
     }
 
     
