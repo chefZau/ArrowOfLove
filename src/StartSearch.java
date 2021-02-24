@@ -47,14 +47,14 @@ public class StartSearch {
         int[] scores = new int[NUMNEIGHBOURS];
         for (int i = 0; i < NUMNEIGHBOURS; i++) {
 
-            MapCell cur = cell.getNeighbour(i);
-            if (cur == null || cur.isMarked() || cur.isBlackHole() || (i % 2 == 0 && cur.isHorizontalPath()) || (i % 2 != 0 && cur.isVerticalPath()) || (cell.isVerticalPath() && cur.isHorizontalPath()) || (cell.isHorizontalPath() && cur.isVerticalPath())) {
+            MapCell neighbour = cell.getNeighbour(i);
+            if (!isValidPath(cell, neighbour, i)) {
                 scores[i] = -1;
-            } else if (cur.isTarget()) {
+            } else if (neighbour.isTarget()) {
                 scores[i] = 100;
-            } else if (cur.isCrossPath()) {
+            } else if (neighbour.isCrossPath()) {
                 scores[i] = 75;
-            } else if (cur.isVerticalPath() || cur.isHorizontalPath()) {
+            } else if (neighbour.isVerticalPath() || neighbour.isHorizontalPath()) {
                 scores[i] = 50;
             }
         }
@@ -85,15 +85,32 @@ public class StartSearch {
 
     }
 
+    /**
+     * This function will validate if a cell can move forward to another
+     * cell or not. 
+     * 
+     * Limitation:
+     *      target, cupid, cross
+     *          path cell: 0, 2 if 0,2 are vertical 
+     *          1, 3 if 1,3 are horizontal 
+     *      vertical cell: 0 and 2
+     *      horizontal cell: 3 and 1
+     * 
+     * @param current the current cell we are at
+     * @param neighbour the cell we are planning to go
+     * @param dir the direction of the neighbour cell 
+     * @return True if we can move to neighbour cell, false otherwise
+     */
+    private boolean isValidPath(MapCell current, MapCell neighbour, int dir) {
 
-    private boolean isValidPath(MapCell current, MapCell neighbour, int direction) {
         if (neighbour == null || neighbour.isMarked() || neighbour.isBlackHole()) {
             return false;
-        } else if ((direction == 0 || direction == 2) && neighbour.isHorizontalPath()) {
+        } else if ((dir == 0 || dir == 2) && neighbour.isHorizontalPath()) {
             return false;
-        } else if ((direction == 1 || direction == 3) && neighbour.isVerticalPath() {
+        } else if ((dir == 1 || dir == 3) && neighbour.isVerticalPath()) {
             return false;
         }
+        
         return true;
     }
 
@@ -118,7 +135,7 @@ public class StartSearch {
         }
 
         MapCell next = cell.getNeighbour(direction);
-        if (next != null && !next.isMarked() && !done && !next.isBlackHole() ) {
+        if (isValidPath(cell, next, direction) && !done) {
             inertia++;
             return next;
         } else if (inertia < 3) {
