@@ -139,9 +139,9 @@ public class StartSearch {
             if (direction == -1) return null;
             inertia = 0;
             return cell.getNeighbour(direction);
-        } else {
-            this.done = true;
-        }
+        } 
+        
+        this.done = true;
 
         // inertia > 3, next is null or marked
         return null;
