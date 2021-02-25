@@ -255,8 +255,6 @@ public class StartSearch {
 
             Boolean found = Cupid.findTarget(stack, maxPathLength);    // shoot once
             
-            totalFoud += (found) ? 1 : 0;
-            
             if (found) {
                 totalFoud++;
             } else {
