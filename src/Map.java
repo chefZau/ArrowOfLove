@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Map extends JFrame {
-	
+
 	private int timeDelay;
 	private MapCell startCell;
 	private int numNeighbours = 4;
@@ -20,7 +20,7 @@ public class Map extends JFrame {
 
 	public Map (String mapFile) throws InvalidMapException, FileNotFoundException, IOException {
 		super("Map");
-		
+
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JPanel p = new JPanel();
 
@@ -44,16 +44,16 @@ public class Map extends JFrame {
 		int row = Integer.parseInt(lineTokens.nextToken());
 		//timeDelay = 1000 - 40 * row; // delay inversely proportional to number of cells
 		//timeDelay = 1000 - 50 * row; // delay inversely proportional to number of cells
-		timeDelay = 1000; // delay inversely proportional to number of cells
+		timeDelay = 300; // delay inversely proportional to number of cells
 
 		int col = Integer.parseInt(lineTokens.nextToken());
 
 		int cellSize = screenHeight / (row + 2);
-		
-		
+
+
 		numTargets = Integer.parseInt(lineTokens.nextToken());
-		quiverSize = Integer.parseInt(lineTokens.nextToken());		
-		
+		quiverSize = Integer.parseInt(lineTokens.nextToken());
+
 		if (lineTokens.hasMoreTokens()) {
 			timeDelay = Integer.parseInt(lineTokens.nextToken());
 
@@ -64,7 +64,7 @@ public class Map extends JFrame {
 			}
 
 		}
-		
+
 
 		// To build the Map we will make temporary use of a 2D array
 		// Once built, the hexagons themselves know all of their neighbors, so
@@ -78,7 +78,7 @@ public class Map extends JFrame {
 		p.setLayout(new CellLayout(row, col, 2));
 
 		int identifier = 1;
-		
+
 		for (int r = 1; r < row + 1; r++) {
 			line = in.readLine();
 			lineTokens = new StringTokenizer(line);
@@ -89,37 +89,37 @@ public class Map extends JFrame {
 				// Read the token and generate the cell type
 				char token = lineTokens.nextToken().charAt(0);
 				switch (token) {
-				case 'W': // wall
-					mapBuilder[r][c] = new MapCell(MapCell.CellType.BLOCK, timeDelay, -1);
-					//System.out.print("-1\t");
-					break;
-				case 'S': // start
-					mapBuilder[r][c] = new MapCell(MapCell.CellType.INITIAL, timeDelay, 0);
-					startCell = mapBuilder[r][c];
-					//System.out.print("0\t");
-					break;
-				case 'J': // jewel
-					mapBuilder[r][c] = new MapCell(MapCell.CellType.TARGET, timeDelay, identifier);
-					//System.out.print(identifier + "\t");
-					identifier++;
-					break;
-				case 'C': // cross-path (both directions)
-					mapBuilder[r][c] = new MapCell(MapCell.CellType.CROSS_PATH, timeDelay, identifier);
-					//System.out.print(identifier + "\t");
-					identifier++;
-					break;
-				case 'H': // horizontal path
-					mapBuilder[r][c] = new MapCell(MapCell.CellType.HORIZ_PATH, timeDelay, identifier);
-					//System.out.print(identifier + "\t");
-					identifier++;
-					break;
-				case 'V': // vertical path
-					mapBuilder[r][c] = new MapCell(MapCell.CellType.VERT_PATH, timeDelay, identifier);
-					//System.out.print(identifier + " \t");
-					identifier++;
-					break;
-				default:
-					throw new InvalidMapException(token);
+					case 'W': // wall
+						mapBuilder[r][c] = new MapCell(MapCell.CellType.BLOCK, timeDelay, -1);
+						//System.out.print("-1\t");
+						break;
+					case 'S': // start
+						mapBuilder[r][c] = new MapCell(MapCell.CellType.INITIAL, timeDelay, 0);
+						startCell = mapBuilder[r][c];
+						//System.out.print("0\t");
+						break;
+					case 'J': // jewel
+						mapBuilder[r][c] = new MapCell(MapCell.CellType.TARGET, timeDelay, identifier);
+						//System.out.print(identifier + "\t");
+						identifier++;
+						break;
+					case 'C': // cross-path (both directions)
+						mapBuilder[r][c] = new MapCell(MapCell.CellType.CROSS_PATH, timeDelay, identifier);
+						//System.out.print(identifier + "\t");
+						identifier++;
+						break;
+					case 'H': // horizontal path
+						mapBuilder[r][c] = new MapCell(MapCell.CellType.HORIZ_PATH, timeDelay, identifier);
+						//System.out.print(identifier + "\t");
+						identifier++;
+						break;
+					case 'V': // vertical path
+						mapBuilder[r][c] = new MapCell(MapCell.CellType.VERT_PATH, timeDelay, identifier);
+						//System.out.print(identifier + " \t");
+						identifier++;
+						break;
+					default:
+						throw new InvalidMapException(token);
 				}
 
 				// add to the GUI layout
@@ -164,27 +164,27 @@ public class Map extends JFrame {
 		this.setSize(cellSize * row, cellSize * col);
 		this.setVisible(true);
 	}
-	
-	
+
+
 	public void setDelay (int delay) {
 		timeDelay = delay;
 	}
-	
+
 	public int getDelay () {
 		return timeDelay;
 	}
-	
+
 
 	public MapCell getStart() {
 		return startCell;
 	}
-	
+
 	public int quiverSize() {
 		return quiverSize;
 	}
-	
-	
-	
+
+
+
 	@Override
 	/**
 	 * This method will update the Map to reflect any changes to the cells.
@@ -199,5 +199,5 @@ public class Map extends JFrame {
 		}
 		super.repaint();
 	}
-	
+
 }

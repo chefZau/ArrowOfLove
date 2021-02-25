@@ -1,9 +1,9 @@
 import java.awt.Color;
 /**
-* This class contains all the colors used by the map and map cells.
-* <p>
-* @author CS1027
-*/
+ * This class contains all the colors used by the map and map cells.
+ * <p>
+ * @author CS1027
+ */
 public class CellColours {
 	// Color definitions
 	public static final Color BLOCK = Color.BLACK;
@@ -27,11 +27,11 @@ public class CellColours {
 	public static final Color OMNI_SWITCH = Color.GREEN;
 
 	/**
-	* Selects the final color in a gradient texture.
-	*
-	* @param c The cell name of the color
-	* @return The color for the gradient
-	*/
+	 * Selects the final color in a gradient texture.
+	 *
+	 * @param c The cell name of the color
+	 * @return The color for the gradient
+	 */
 	public Color gradientColor(Color c) {
 		if (c == BLOCK)
 			return Color.DARK_GRAY.brighter();
@@ -46,12 +46,12 @@ public class CellColours {
 		return c.darker();
 	}
 
-		/**
-	* Selects the initial color in a gradient texture.
-	*
-	* @param c The cell name of the color
-	* @return The color for the gradient
-	*/
+	/**
+	 * Selects the initial color in a gradient texture.
+	 *
+	 * @param c The cell name of the color
+	 * @return The color for the gradient
+	 */
 	public Color initialGradient(Color c) {
 		if (c == TARGET_PROCESSED)
 			return new Color(150, 250, 250);

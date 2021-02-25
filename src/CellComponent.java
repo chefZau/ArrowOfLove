@@ -10,37 +10,37 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
 public class CellComponent extends JComponent  {
-	
-	
+
+
 	private int scale = 8;  // Images will have size (scale-1)/scale of the tile size
-	private String imgInitial = "initial.jpg";
-	private String imgBlock = "block.jpg";
-	private String imgOmni = "omni.jpg";
-	private String imgOmniPushed = "omni_pushed.jpg";
-	private String imgOmniPopped = "omni_popped.jpg";
-	private String imgHoriz = "horizontal.jpg";
-	private String imgHorizPushed = "horizontal_pushed.jpg";
-	private String imgHorizPopped = "horizontal_popped.jpg";
-	private String imgVert = "vertical.jpg";
-	private String imgVertPushed = "vertical_pushed.jpg";
-	private String imgVertPopped = "vertical_popped.jpg";
-	private String imgTARGET = "TARGET.jpg";
-	private String imgTARGETPushed = "TARGET_pushed.jpg";
-	private String imgTARGETPopped = "TARGET_popped.jpg";
+	private String imgInitial = "./resources/initial.jpg";
+	private String imgBlock = "./resources/block.jpg";
+	private String imgOmni = "./resources/omni.jpg";
+	private String imgOmniPushed = "./resources/omni_pushed.jpg";
+	private String imgOmniPopped = "./resources/omni_popped.jpg";
+	private String imgHoriz = "./resources/horizontal.jpg";
+	private String imgHorizPushed = "./resources/horizontal_pushed.jpg";
+	private String imgHorizPopped = "./resources/horizontal_popped.jpg";
+	private String imgVert = "./resources/vertical.jpg";
+	private String imgVertPushed = "./resources/vertical_pushed.jpg";
+	private String imgVertPopped = "./resources/vertical_popped.jpg";
+	private String imgTARGET = "./resources/TARGET.jpg";
+	private String imgTARGETPushed = "./resources/TARGET_pushed.jpg";
+	private String imgTARGETPopped = "./resources/TARGET_popped.jpg";
 
 	private Polygon cellPoly = new Polygon(); // Square bounds of cell
 
 	private final int nPoints = 4;
 	private int[] polyX = new int[nPoints]; // x coordinates of the vertices of the cell
 	private int[] polyY = new int[nPoints]; // y coordinates of the vertices of the cell
-	
+
 	private Color defaultColor; // Default color for the cell
-	
-	
-	
+
+
+
 	/**
 	 * Processes a mouse click
-	 * 
+	 *
 	 * @param e
 	 *            MouseEvent object representing mouse's click
 	 */
@@ -49,12 +49,12 @@ public class CellComponent extends JComponent  {
 		if (contains(e.getPoint()))
 			super.processMouseEvent(e);
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Draws the different types of map cells on the screen
-	 * 
+	 *
 	 * @param g
 	 *            Graphics object used to draw the cells on the screen
 	 */
@@ -201,5 +201,5 @@ public class CellComponent extends JComponent  {
 		g2d.setPaint(defaultColor);
 
 	}
-	
+
 }
