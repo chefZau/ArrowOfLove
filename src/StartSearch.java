@@ -58,14 +58,6 @@ public class StartSearch {
                 scores[i] = 50;
             }
         }
-        
-        if (cell.isVerticalPath()) {
-            scores[1] = -1;
-            scores[3] = -1;
-        } else if (cell.isHorizontalPath()) {
-            scores[0] = -1;
-            scores[2] = -1;
-        }
 
         // find the max element and its index
         int maxElement = scores[0], maxIndex = 0;
@@ -108,6 +100,10 @@ public class StartSearch {
         } else if ((dir == 0 || dir == 2) && neighbour.isHorizontalPath()) {
             return false;
         } else if ((dir == 1 || dir == 3) && neighbour.isVerticalPath()) {
+            return false;
+        } else if (current.isVerticalPath() && (dir == 1 || dir == 3)) {
+            return false;
+        } else if (current.isHorizontalPath() && ((dir == 0 || dir == 2))) {
             return false;
         }
         
@@ -271,7 +267,6 @@ public class StartSearch {
         
         // output the number of targets found
         System.out.println(totalFoud);
-        // System.out.println(ArrayStack.sequence);
     }
 
     
