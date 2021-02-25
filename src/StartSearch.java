@@ -200,13 +200,13 @@ public class StartSearch {
                 }
 
             } else {
+
                 if (this.isAdjacentToCupid(top)) { // if top is adjacent to cupid mark out stack
                     top.markOutStack();
                 }
                 stack.pop();
             }
             maxSteps--;
-            // System.out.println(ArrayStack.sequence);
         }
 
         while (!stack.isEmpty()) {
@@ -218,7 +218,6 @@ public class StartSearch {
             }
 
             stack.pop();
-            // System.out.println(ArrayStack.sequence);
         }
 
         this.direction = -1;
