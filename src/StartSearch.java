@@ -95,7 +95,7 @@ public class StartSearch {
      */
     private boolean isValidPath(MapCell current, MapCell neighbour, int dir) {
 
-        if (neighbour == null || neighbour.isMarked() || neighbour.isBlackHole()) {
+        if (neighbour == null || neighbour.isMarked() || neighbour.isBlackHole() || neighbour.getIdentifier() == 0) {
             return false;
         } else if ((dir == 0 || dir == 2) && neighbour.isHorizontalPath()) {
             return false;
