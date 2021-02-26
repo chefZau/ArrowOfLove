@@ -177,6 +177,7 @@ public class StartSearch {
         stack.push(initial);
         initial.markInStack();
 
+        int backtrack = 0;
         boolean found = false;
 
         while (!stack.isEmpty() && maxSteps > 0 && !found) {
@@ -204,7 +205,13 @@ public class StartSearch {
                 if (this.isAdjacentToCupid(top)) { // if top is adjacent to cupid mark out stack
                     top.markOutStack();
                 }
+                
                 stack.pop();
+                backtrack++;
+
+                if (backtrack == 3) {
+                    this.done = true;
+                }
             }
             maxSteps--;
         }
