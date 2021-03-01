@@ -23,7 +23,7 @@ To gain experience with
 
 As we can see on the proejct title, this is the second assignment of the course [CS1027](https://www.csd.uwo.ca/courses/CS1027b/). If you want to know more about the implementation, here is the [original pdf](./Assignment2_Instructions.pdf) for the assignment.
 
-If you are cloning or forking this repository, this project's entry point is at the following path: ./src/StartSearch.java. It is a console program. To run it, here are some file paths for your argument:
+If you are cloning or forking this repository, this project's entry point is at the following path: ``./src/StartSearch.java``. It is a console program. To run it, here are some file paths for your argument:
 
 ```text
     ./resources_test/xmap1.txt
