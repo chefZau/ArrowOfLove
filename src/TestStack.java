@@ -6,13 +6,15 @@ public class TestStack {
 		int value;
 
 		if (args.length == 0)
-			for (int i = 0; i < numTests; ++i) tests[i] = i + 1;
+			for (int i = 0; i < numTests; ++i)
+				tests[i] = i + 1;
 		else
 			for (int i = 0; i < args.length; ++i) {
 				value = Integer.parseInt(args[i]);
 				if (value >= 1 && value <= numTests)
-					tests[value-1] = value;
-				else System.out.println("ERROR: Test "+value+ "does not exist");
+					tests[value - 1] = value;
+				else
+					System.out.println("ERROR: Test " + value + "does not exist");
 			}
 		return tests;
 	}
@@ -20,7 +22,7 @@ public class TestStack {
 	public static void main(String[] args) {
 		boolean testPassed;
 		Integer val = null;
-		int[] tests = readTests(args,7);
+		int[] tests = readTests(args, 7);
 
 		ArrayStack<Integer> s = new ArrayStack<Integer>(30);
 		System.out.println("TESTS FOR CLASS ArrayStack");
@@ -35,9 +37,12 @@ public class TestStack {
 				val = s.peek();
 				if ((val.intValue() == 10) && (s.size() == 11))
 					testPassed = true;
-				else testPassed = false;
+				else
+					testPassed = false;
 
-			} catch (Exception e) {testPassed = false;}
+			} catch (Exception e) {
+				testPassed = false;
+			}
 			if (testPassed)
 				System.out.println("Test 1 passed: push() and peek()");
 			else
@@ -51,9 +56,12 @@ public class TestStack {
 						val = s.pop();
 					if ((val.intValue() == 6) && !s.isEmpty())
 						testPassed = true;
-					else testPassed = false;
+					else
+						testPassed = false;
 
-				} catch (Exception e) {testPassed = false;}
+				} catch (Exception e) {
+					testPassed = false;
+				}
 				if (testPassed)
 					System.out.println("Test 2 passed: pop()");
 				else
@@ -67,8 +75,11 @@ public class TestStack {
 						val = s.pop();
 					testPassed = false;
 
-				} catch (EmptyStackException e) {testPassed = true;}
-				catch (Exception e) {testPassed = false;}
+				} catch (EmptyStackException e) {
+					testPassed = true;
+				} catch (Exception e) {
+					testPassed = false;
+				}
 				if (testPassed)
 					System.out.println("Test 3 passed: pop() empty");
 				else
@@ -87,23 +98,25 @@ public class TestStack {
 					if ((i == 25) && (s.length() != 35)) {
 						testPassed = false;
 						break;
-					}
-					else if ((i == 75) && (s.length() != 110)) {
+					} else if ((i == 75) && (s.length() != 110)) {
 						testPassed = false;
 						break;
-					}
-					else if ((i == 225) && (s.length() != 440)) {
+					} else if ((i == 225) && (s.length() != 440)) {
 						testPassed = false;
 						break;
 					}
 				}
-			} catch (Exception e) {testPassed = false; System.out.println(e);}
+			} catch (Exception e) {
+				testPassed = false;
+				System.out.println(e);
+			}
 
-//			System.out.println(s.length());
+			// System.out.println(s.length());
 
 			if (testPassed)
 				System.out.println("Test 4 passed: increase stack");
-			else System.out.println("Test 4 failed: increase stack");
+			else
+				System.out.println("Test 4 failed: increase stack");
 		}
 
 		if (tests[4] == 5) {
@@ -119,22 +132,25 @@ public class TestStack {
 
 					result = s.pop();
 					if ((i == 24) && (s.length() != 50)) {
-						System.out.println("19: "+s.length());
+						System.out.println("19: " + s.length());
 						testPassed = false;
 						break;
-					}
-					else if ((i == 3) && (s.length() != 14)) {
-						System.out.println("9: "+s.length());
+					} else if ((i == 3) && (s.length() != 14)) {
+						System.out.println("9: " + s.length());
 						testPassed = false;
 						break;
 					}
 				}
-				if (s.length() != 14) testPassed = false;
-			} catch (Exception e) {testPassed = false;}
+				if (s.length() != 14)
+					testPassed = false;
+			} catch (Exception e) {
+				testPassed = false;
+			}
 
 			if (!testPassed)
 				System.out.println("Test 5 failed: decrease stack");
-			else System.out.println("Test 5 passed: decrease stack");
+			else
+				System.out.println("Test 5 passed: decrease stack");
 		}
 
 		if (tests[5] == 6) {
@@ -155,7 +171,9 @@ public class TestStack {
 					}
 				}
 
-			} catch (Exception e) {testPassed = false;}
+			} catch (Exception e) {
+				testPassed = false;
+			}
 			if (testPassed)
 				System.out.println("Test 6 passed: push(), pop(), size()");
 			else
@@ -170,10 +188,13 @@ public class TestStack {
 				for (int i = 0; i < 3; ++i)
 					s.push(Integer.valueOf(i));
 				String out = s.toString();
-				if (out.equals("Stack: 0, 1, 2")) testPassed = true;
-				else testPassed = false;
+				if (out.equals("Stack: 0, 1, 2"))
+					testPassed = true;
+				else
+					testPassed = false;
+			} catch (Exception e) {
+				testPassed = false;
 			}
-			catch(Exception e) {testPassed = false;}
 			if (testPassed)
 				System.out.println("Test 7 passed: toString()");
 			else {
