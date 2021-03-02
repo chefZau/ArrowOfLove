@@ -5,15 +5,21 @@ import java.io.IOException;
  */
 public class StartSearch {
 
-    private Map targetMap;  
+    private Map targetMap;      // reference the object representing the map
     private int numArrows;      // how many arrow has fired so far, how many target has found
     private int inertia;        // how many times an arrow has travelled in the same direction
     private int direction;      // tracking the direction of the arrow
+    private boolean done;       // tracking the status of the arrow, true when arrow can't go anywhere
+    private final int NUMNEIGHBOURS = 4;    // number of neighbours can have
 
-    private boolean done;
-
-    private final int NUMNEIGHBOURS = 4; // number of neighbours can have
-
+    /**
+     * Constructor of the class. It receives as input the name of the file
+     * containing the description of the map. In this method you must create an
+     * object of the class Map (described in the provided files) passing as
+     * parameter the given input file; this will display the map on the screen.
+     * 
+     * @param filename the file name from the command line
+     */
     public StartSearch(String filename) {
         try {
 			targetMap = new Map(filename);
@@ -27,19 +33,15 @@ public class StartSearch {
 
     /**
      * The helper function of nextCell(). This function will return the best index
-     * to continue the path from the current cell. 
-     * 
-     * valid path: 
-     *      target, cupid, cross
-     *          path cell: 0, 2 if 0,2 are vertical 
-     *          1, 3 if 1,3 are horizontal 
-     *      vertical cell: 0 and 2
-     *      horizontal cell: 3 and 1
+     * to continue the path from the current cell.
      * 
      * precedence: target > cross > vertical, horizontal > block
      * 
+     * The idea of this method is straightforward. Assign scores to all adjacent
+     * neighbors. Find the neighbor with the highest score.
+     * 
      * @param cell
-     * @return
+     * @return the index of the neighbour
      */
     private int getBestDirection(MapCell cell) {
         
@@ -235,8 +237,15 @@ public class StartSearch {
     }
 
     /**
+     * The main method of the class. This method will first create an object of the
+     * class StartSearch using the constuctor StartSearch(args[0]). Args[0] will be
+     * the name of a map file, args[1] will be the number of cells that the arrow
+     * can travel before it falls to the ground. o If and only if a size argument is
+     * provided, your algorithm should count how many targets can be found in a path
+     * that is at most args[1] long with the number of arrows determined by the map.
      * 
-     * @param args
+     * @param args args[0]: file name; args[1](optional): the number of cell that arrow can
+     *             travel
      */
     public static void main(String[] args) {
         
