@@ -128,19 +128,18 @@ public class StartSearch {
 
         if (direction == -1) {
             direction = getBestDirection(cell);
-            if (direction == -1) return null;
-            return cell.getNeighbour(direction);
+            return (direction == -1) ? null : cell.getNeighbour(direction);
         }
 
         MapCell next = cell.getNeighbour(direction);
         if (isValidPath(cell, next, direction) && !done) {
             inertia++;
             return next;
+
         } else if (inertia < 3) {
-            direction = getBestDirection(cell);
-            if (direction == -1) return null;
             inertia = 0;
-            return cell.getNeighbour(direction);
+            direction = getBestDirection(cell);
+            return (direction == -1) ? null : cell.getNeighbour(direction);
         } 
         
         this.done = true;
