@@ -9,6 +9,7 @@ public class StartSearch {
     private int numArrows;      // how many arrow has fired so far, how many target has found
     private int inertia;        // how many times an arrow has travelled in the same direction
     private int direction;      // tracking the direction of the arrow
+    
     private boolean done;       // tracking the status of the arrow, true when arrow can't go anywhere
     private final int NUMNEIGHBOURS = 4;    // number of neighbours can have
 
@@ -186,6 +187,11 @@ public class StartSearch {
             MapCell top = stack.peek();
 
             MapCell next;
+            next = this.nextCell(top);
+            if (inertia > 3 & next == null) {
+                 
+            }
+
             if (!done) {
                 next = this.nextCell(top);
             } else {
