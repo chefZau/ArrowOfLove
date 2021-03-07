@@ -50,6 +50,7 @@ public class StartSearch {
         for (int i = 0; i < NUMNEIGHBOURS; i++) {
 
             MapCell neighbour = cell.getNeighbour(i);
+            
             if (!isValidPath(cell, neighbour, i)) {
                 scores[i] = -1;
             } else if (neighbour.isTarget()) {
@@ -125,7 +126,8 @@ public class StartSearch {
      * @return
      */
     public MapCell nextCell(MapCell cell) {
-
+        
+        // first stop of an arrow, initilize it
         if (direction == -1) {
             direction = getBestDirection(cell);
             return (direction == -1) ? null : cell.getNeighbour(direction);
@@ -142,7 +144,7 @@ public class StartSearch {
             return (direction == -1) ? null : cell.getNeighbour(direction);
         }
 
-        // inertia > 3, next is null or marked
+        // inertia > 3, next is invalid
         return null;
 
     }
@@ -218,7 +220,6 @@ public class StartSearch {
         while (!stack.isEmpty()) {
 
             MapCell top = stack.peek();
-
             if (this.isAdjacentToCupid(top)) {
                 top.markOutStack();
             }
