@@ -9,8 +9,7 @@ public class StartSearch {
     private int numArrows;      // how many arrow has fired so far, how many target has found
     private int inertia;        // how many times an arrow has travelled in the same direction
     private int direction;      // tracking the direction of the arrow
-    
-    private boolean done;       // tracking the status of the arrow, true when arrow can't go anywhere
+
     private final int NUMNEIGHBOURS = 4;    // number of neighbours can have
 
     /**
@@ -133,7 +132,7 @@ public class StartSearch {
         }
 
         MapCell next = cell.getNeighbour(direction);
-        if (isValidPath(cell, next, direction) && !done) {
+        if (isValidPath(cell, next, direction)) {
             inertia++;
             return next;
 
@@ -141,9 +140,7 @@ public class StartSearch {
             inertia = 0;
             direction = getBestDirection(cell);
             return (direction == -1) ? null : cell.getNeighbour(direction);
-        } 
-        
-        this.done = true;
+        }
 
         // inertia > 3, next is null or marked
         return null;
@@ -181,21 +178,16 @@ public class StartSearch {
 
         int backtrack = 0;
         boolean found = false;
+        boolean done = false;
 
         while (!stack.isEmpty() && maxSteps > 0 && !found) {
             
             MapCell top = stack.peek();
 
-            MapCell next;
-            next = this.nextCell(top);
-            if (inertia > 3 & next == null) {
-                 
-            }
+            MapCell next = (!done) ? this.nextCell(top) : null;
 
-            if (!done) {
-                next = this.nextCell(top);
-            } else {
-                next = null;
+            if (inertia >= 3 && next == null) {
+                done = true;
             }
 
             if (next != null) {
@@ -217,7 +209,7 @@ public class StartSearch {
                 backtrack++;
 
                 if (backtrack == 3) {
-                    this.done = true;
+                    done = true;
                 }
             }
             maxSteps--;
@@ -236,7 +228,6 @@ public class StartSearch {
 
         this.direction = -1;
         this.inertia = 0;
-        this.done = false;
 
         return found;
     }
